@@ -5,7 +5,7 @@
 
 ## install dependencies
 
-    npm i install
+    npm install
     
     
 ## start the api server (default port: 8080)
