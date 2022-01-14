@@ -22,7 +22,7 @@ const EntrySchema = new mongoose.Schema(
       type: String,
       required:true,
       minLength: 1,
-      maxLength:700,
+      maxLength:1500,
 
     },
    

@@ -7,8 +7,18 @@ const mongoose = require('mongoose')
 //get all the entries
 router.get('/', async (req, res) => {
 
-    const allEntries = await Entry.find()
-    res.status(200).json(allEntries)
+    try{
+        const allEntries = await Entry.find()
+
+        //reverse order to get lastest first
+        allEntries.reverse()
+        res.status(200).json(allEntries)
+
+    }catch(e){
+        res.status(500).json(e)
+
+    }
+  
 
 })
 
@@ -29,7 +39,7 @@ router.post('/new', async (req, res) => {
     } catch (e) {
 
         console.log(e)
-        res.status(401).json(e)
+        res.status(500).json(e)
     }
 })
 
@@ -38,7 +48,7 @@ router.get('/search/:id', async (req, res) => {
 
     try {
         //verify if is the ID is valid
-        if (mongoose.isValidObjectId(req.params.id)) {
+        if (await mongoose.isValidObjectId(req.params.id)) {
 
             const entryToFind = await Entry.findById(req.params.id)
 
@@ -50,7 +60,7 @@ router.get('/search/:id', async (req, res) => {
 
         }else{
 
-            res.status(401).json('invalid ID')
+            res.status(400).json('invalid ID')
 
         }
 
